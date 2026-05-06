@@ -760,3 +760,172 @@
     width: 100% !important;
   }
 }
+
+/* StatCard Styles */
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.9) 100%);
+  border: 1px solid rgba(226, 232, 240, 0.6);
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-value {
+  font-weight: 700 !important;
+  color: #1e293b !important;
+  line-height: 1.2 !important;
+}
+
+.stat-label {
+  color: #64748b !important;
+  font-size: 0.8rem !important;
+}
+
+/* EmptyState Styles */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #fafbff 0%, #f8fafc 100%);
+  border: 2px dashed rgba(148, 163, 184, 0.3);
+  border-radius: 16px;
+  min-height: 300px;
+}
+
+/* ConfirmDialog Styles */
+.confirm-dialog {
+  border-radius: 16px !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
+}
+
+.confirm-dialog .MuiDialogTitle-root {
+  font-weight: 600 !important;
+  color: #1e293b !important;
+}
+
+.confirm-dialog .MuiDialogContentText-root {
+  color: #64748b !important;
+}
+
+/* MessageBubble Styles */
+.message-item {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  align-items: flex-start;
+}
+
+.message-item.my-message {
+  flex-direction: row-reverse;
+}
+
+.message-content {
+  max-width: 70%;
+}
+
+.message-user {
+  display: block;
+  color: #64748b !important;
+  margin-bottom: 4px !important;
+  font-weight: 600 !important;
+}
+
+.message-text {
+  background: rgba(241, 245, 249, 0.95);
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  display: inline-block;
+  word-wrap: break-word;
+}
+
+.my-message .message-text {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white !important;
+  border-color: transparent;
+}
+
+.message-time {
+  display: block;
+  color: #94a3b8 !important;
+  margin-top: 4px !important;
+  font-size: 0.7rem !important;
+}
+
+.my-message .message-time {
+  text-align: right;
+}
+
+/* Dark Mode for New Components */
+.dark-mode .stat-card {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%);
+  border-color: rgba(71, 85, 105, 0.6);
+}
+
+.dark-mode .stat-card:hover {
+  border-color: rgba(99, 102, 241, 0.5);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
+
+.dark-mode .stat-value {
+  color: #f1f5f9 !important;
+}
+
+.dark-mode .stat-label {
+  color: #94a3b8 !important;
+}
+
+.dark-mode .empty-state {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.8) 100%);
+  border-color: rgba(71, 85, 105, 0.5);
+}
+
+.dark-mode .empty-state .MuiTypography-h6 {
+  color: #f1f5f9 !important;
+}
+
+.dark-mode .confirm-dialog {
+  background: #1e293b !important;
+  border-color: rgba(71, 85, 105, 0.8) !important;
+}
+
+.dark-mode .confirm-dialog .MuiDialogTitle-root {
+  color: #f1f5f9 !important;
+}
+
+.dark-mode .confirm-dialog .MuiDialogContentText-root {
+  color: #cbd5e1 !important;
+}
+
+.dark-mode .message-text {
+  background: rgba(51, 65, 85, 0.9);
+  border-color: rgba(71, 85, 105, 0.5);
+  color: #e2e8f0 !important;
+}
+
+.dark-mode .my-message .message-text {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white !important;
+}

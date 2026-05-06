@@ -4,9 +4,7 @@ import {
     Card,
     CardContent,
     Chip,
-    IconButton,
     Stack,
-    Tooltip,
     Typography,
 } from '@mui/material'
 import FavoriteIcon from '@mui/icons-material/Favorite'
@@ -14,6 +12,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import CommentIcon from '@mui/icons-material/Comment'
 import ShareIcon from '@mui/icons-material/Share'
 import DeleteIcon from '@mui/icons-material/Delete'
+import ActionButton from '../ActionButton/ActionButton'
 
 const PostCard = memo(({ post, isLiked, onLike, onShare, onDelete }) => {
     const handleLike = () => {
@@ -47,47 +46,32 @@ const PostCard = memo(({ post, isLiked, onLike, onShare, onDelete }) => {
                     {post.body}
                 </Typography>
                 <Stack direction="row" spacing={2} sx={{ mt: 2 }} className="post-actions">
-                    <Tooltip title={isLiked ? "Unlike" : "Like"}>
-                        <IconButton
-                            size="small"
-                            className={`action-btn ${isLiked ? 'liked' : ''}`}
-                            onClick={handleLike}
-                        >
-                            {isLiked ? (
-                                <FavoriteIcon fontSize="small" sx={{ color: '#ef4444' }} />
-                            ) : (
-                                <FavoriteBorderIcon fontSize="small" />
-                            )}
-                            <Typography variant="caption" sx={{ ml: 0.5 }}>
-                                {isLiked ? '25' : '24'}
-                            </Typography>
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Comment">
-                        <IconButton size="small" className="action-btn">
-                            <CommentIcon fontSize="small" />
-                            <Typography variant="caption" sx={{ ml: 0.5 }}>12</Typography>
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Share">
-                        <IconButton
-                            size="small"
-                            className="action-btn"
-                            onClick={handleShare}
-                        >
-                            <ShareIcon fontSize="small" />
-                        </IconButton>
-                    </Tooltip>
+                    <ActionButton
+                        icon={isLiked ? FavoriteIcon : FavoriteBorderIcon}
+                        label={isLiked ? "Unlike" : "Like"}
+                        count={isLiked ? 25 : 24}
+                        onClick={handleLike}
+                        active={isLiked}
+                        activeColor="#ef4444"
+                        className={isLiked ? 'liked' : ''}
+                    />
+                    <ActionButton
+                        icon={CommentIcon}
+                        label="Comment"
+                        count={12}
+                    />
+                    <ActionButton
+                        icon={ShareIcon}
+                        label="Share"
+                        onClick={handleShare}
+                    />
                     <Box sx={{ flexGrow: 1 }} />
-                    <Tooltip title="Delete post">
-                        <IconButton
-                            size="small"
-                            className="action-btn delete-btn"
-                            onClick={handleDelete}
-                        >
-                            <DeleteIcon fontSize="small" />
-                        </IconButton>
-                    </Tooltip>
+                    <ActionButton
+                        icon={DeleteIcon}
+                        label="Delete post"
+                        onClick={handleDelete}
+                        className="delete-btn"
+                    />
                 </Stack>
             </CardContent>
         </Card>

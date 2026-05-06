@@ -1,14 +1,9 @@
 import { memo } from 'react'
-import {
-    Alert,
-    Box,
-    Card,
-    CardContent,
-    CircularProgress,
-    Stack,
-    Typography,
-} from '@mui/material'
+import { Alert, Stack } from '@mui/material'
+import PostAddIcon from '@mui/icons-material/PostAdd'
 import PostCard from '../PostCard/PostCard'
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
+import EmptyState from '../EmptyState/EmptyState'
 
 const PostList = memo(({ posts, loading, error, likedPosts, onLike, onShare, onDelete }) => {
     if (error) {
@@ -20,22 +15,16 @@ const PostList = memo(({ posts, loading, error, likedPosts, onLike, onShare, onD
     }
 
     if (loading) {
-        return (
-            <Box className="loading-wrap">
-                <CircularProgress />
-            </Box>
-        )
+        return <LoadingSpinner message="Loading posts..." />
     }
 
     if (!posts.length) {
         return (
-            <Card className="post-card empty-card">
-                <CardContent>
-                    <Typography variant="body1">
-                        No posts found. Create one with the + Create button.
-                    </Typography>
-                </CardContent>
-            </Card>
+            <EmptyState
+                icon={PostAddIcon}
+                title="No posts found"
+                description="Create your first post with the + Create button in the sidebar."
+            />
         )
     }
 

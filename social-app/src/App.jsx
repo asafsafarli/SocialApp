@@ -2,11 +2,12 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Box, Container, Typography } from '@mui/material'
 import Sidebar from './components/Sidebar/Sidebar'
 import Header from './components/Header/Header'
-import PostList from './components/PostList/PostList'
 import ChatBox from './components/ChatBox/ChatBox'
 import CreatePostDialog from './components/CreatePostDialog/CreatePostDialog'
 import StatsPanel from './components/StatsPanel/StatsPanel'
 import QuickTipsPanel from './components/QuickTipsPanel/QuickTipsPanel'
+import FeedSection from './components/FeedSection/FeedSection'
+import ConfirmDialog from './components/ConfirmDialog/ConfirmDialog'
 import './App.css'
 
 const API_URL = 'https://blog-api-t6u0.onrender.com/posts'
@@ -29,6 +30,7 @@ function App() {
     { id: 3, user: 'Sarah Johnson', message: 'That sounds exciting! Can\'t wait to see it.', time: '10:33 AM', avatar: 'https://i.pravatar.cc/150?img=47' },
   ])
   const [likedPosts, setLikedPosts] = useState(new Set())
+  const [deleteConfirmation, setDeleteConfirmation] = useState({ open: false, postId: null })
 
   const fetchPosts = useCallback(async () => {
     setLoading(true)
@@ -169,10 +171,8 @@ function App() {
         text: post.body,
         url: window.location.href,
       }).catch(() => {
-        // User cancelled share or error occurred
       })
     } else {
-      // Fallback: copy to clipboard
       const shareText = `${post.title}\n\n${post.body}`
       navigator.clipboard.writeText(shareText).then(() => {
         alert('Post copied to clipboard!')
@@ -182,10 +182,15 @@ function App() {
     }
   }, [])
 
-  const handleDeletePost = useCallback(async (postId) => {
-    if (!window.confirm('Are you sure you want to delete this post?')) {
-      return
-    }
+  const handleDeletePost = useCallback((postId) => {
+    setDeleteConfirmation({ open: true, postId })
+  }, [])
+
+  const handleConfirmDelete = useCallback(async () => {
+    const { postId } = deleteConfirmation
+    setDeleteConfirmation({ open: false, postId: null })
+
+    if (!postId) return
 
     try {
       const response = await fetch(`${API_URL}/${postId}`, {
@@ -196,9 +201,7 @@ function App() {
         throw new Error(`Failed to delete post: ${response.status}`)
       }
 
-      // Remove from local state
       setPosts(prev => prev.filter(post => post.id !== postId))
-      // Remove from liked posts if it was liked
       setLikedPosts(prev => {
         const newLikes = new Set(prev)
         newLikes.delete(postId)
@@ -207,6 +210,10 @@ function App() {
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not delete post')
     }
+  }, [deleteConfirmation])
+
+  const handleCancelDelete = useCallback(() => {
+    setDeleteConfirmation({ open: false, postId: null })
   }, [])
 
   return (
@@ -233,21 +240,15 @@ function App() {
             totalCharacters={totalCharacters}
           />
 
-          <Box className="feed-center">
-            <Typography variant="h4" className="feed-title">
-              Latest Posts
-            </Typography>
-
-            <PostList
-              posts={filteredPosts}
-              loading={loading}
-              error={error}
-              likedPosts={likedPosts}
-              onLike={handleLikePost}
-              onShare={handleSharePost}
-              onDelete={handleDeletePost}
-            />
-          </Box>
+          <FeedSection
+            posts={filteredPosts}
+            loading={loading}
+            error={error}
+            likedPosts={likedPosts}
+            onLike={handleLikePost}
+            onShare={handleSharePost}
+            onDelete={handleDeletePost}
+          />
 
           <QuickTipsPanel />
         </Container>
@@ -271,6 +272,16 @@ function App() {
         message={chatMessage}
         onMessageChange={setChatMessage}
         onSendMessage={handleSendMessage}
+      />
+
+      <ConfirmDialog
+        open={deleteConfirmation.open}
+        title="Delete Post"
+        message="Are you sure you want to delete this post? This action cannot be undone."
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+        confirmText="Delete"
+        cancelText="Cancel"
       />
     </Box>
   )

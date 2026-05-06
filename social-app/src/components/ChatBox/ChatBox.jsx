@@ -12,6 +12,7 @@ import {
 } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send'
 import CloseIcon from '@mui/icons-material/Close'
+import MessageBubble from '../MessageBubble/MessageBubble'
 
 const ChatBox = memo(({
     open,
@@ -53,23 +54,7 @@ const ChatBox = memo(({
 
                 <Box className="chat-messages">
                     {messages.map((msg) => (
-                        <Box
-                            key={msg.id}
-                            className={`chat-message ${msg.isMe ? 'message-me' : 'message-other'}`}
-                        >
-                            {!msg.isMe && (
-                                <Avatar src={msg.avatar} sx={{ width: 32, height: 32, mr: 1 }} />
-                            )}
-                            <Box className="message-bubble">
-                                <Typography variant="body2">{msg.message}</Typography>
-                                <Typography variant="caption" className="message-time">
-                                    {msg.time}
-                                </Typography>
-                            </Box>
-                            {msg.isMe && (
-                                <Avatar src={msg.avatar} sx={{ width: 32, height: 32, ml: 1 }} />
-                            )}
-                        </Box>
+                        <MessageBubble key={msg.id} message={msg} isMe={msg.isMe} />
                     ))}
                 </Box>
 

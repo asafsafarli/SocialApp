@@ -1,8 +1,24 @@
 {
   "name": "social-app",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "A modern social media application built with React, Vite, and Material-UI",
   "type": "module",
+  "author": "Asaf Safarli",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "vite",
+    "social-media",
+    "material-ui",
+    "dark-mode",
+    "chat",
+    "social-app"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/asafsafarli/SocialApp.git"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
